@@ -6,21 +6,20 @@
 #    By: mbaron <mbaron@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/03/05 08:56:04 by mbaron            #+#    #+#              #
-#    Updated: 2018/03/05 19:07:19 by mbaron           ###   ########.fr        #
+#    Updated: 2018/03/05 22:57:37 by mbaron           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	phonebook
 
-SRC		= 	main.cpp			\
-			Contact.class.cpp	\
-			Phonebook.class.cpp
+SRC		= 	main.cpp \
+					Contact.class.cpp
 
 OBJ		=	$(SRC:.cpp=.o)
 
 FLAGS	=	-Wall -Werror -Wextra
 
-GCC		=	clang++
+GCC		=	clang++-3.5
 
 RM		=	rm -f
 
@@ -30,14 +29,14 @@ all		:	$(NAME)
 
 $(NAME)	:	$(OBJ)
 			$(GCC) $(FLAGS) -o $(NAME) $(OBJ)
-			
+
 %.o:%.cpp
 			$(GCC) $(FLAGS) -o $@ -c $<
-			
+
 clean	:
 			$(RM) $(OBJ)
-			
+
 fclean	: 	clean
 			$(RM) $(NAME)
-			
-re		:	fclean all			
+
+re		:	fclean all
