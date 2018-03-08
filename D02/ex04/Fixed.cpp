@@ -187,7 +187,7 @@ void Fixed::operator-=(Fixed const & rhs)
 *********************************************************************/
 void Fixed::operator*=(Fixed const & rhs)
 {
-	this->_raw = this->toFloat() * rhs.toFloat();
+	this->_raw = (int)roundf(this->toFloat() * rhs.toFloat() * (1 << Fixed::_nFixed));
 }
 /*********************************************************************
 * overload /=
@@ -196,7 +196,7 @@ void Fixed::operator/=(Fixed const & rhs)
 {
 	if (!rhs.getRawBits())
 		std::cout << "Divison by 0 !!!";
-	this->_raw = this->toFloat() / rhs.toFloat();
+	this->_raw = (int)roundf(this->toFloat() / rhs.toFloat() * (1 << Fixed::_nFixed));;
 }
 /*********************************************************************
 * overload ++.
