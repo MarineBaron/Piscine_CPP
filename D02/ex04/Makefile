@@ -6,7 +6,7 @@
 #    By: mbaron <mbaron@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/03/05 08:56:04 by mbaron            #+#    #+#              #
-#    Updated: 2018/03/07 18:42:59 by mbaron           ###   ########.fr        #
+#    Updated: 2018/03/07 22:39:56 by mbaron           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ OBJ		=	$(SRC:.cpp=.o)
 
 FLAGS	=	-Wall -Werror -Wextra -g -fsanitize=address -fno-omit-frame-pointer
 
-GCC		=	clang++
+GCC		=	clang++-3.5
 
 RM		=	rm -f
 
@@ -29,14 +29,14 @@ all		:	$(NAME)
 
 $(NAME)	:	$(OBJ)
 			$(GCC) $(FLAGS) -o $(NAME) $(OBJ)
-			
+
 %.o:%.cpp
 			$(GCC) $(FLAGS) -o $@ -c $<
-			
+
 clean	:
 			$(RM) $(OBJ)
-			
+
 fclean	: 	clean
 			$(RM) $(NAME)
-			
-re		:	fclean all			
+
+re		:	fclean all

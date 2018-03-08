@@ -2,6 +2,8 @@
 # define FIXED_HPP
 # include <iostream>
 # include <cmath>
+# include <string>
+# include <sstream>
 
 class Fixed
 {
@@ -11,7 +13,7 @@ class Fixed
 		Fixed(int const raw);
 		Fixed(float const raw);
 		~Fixed(void);
-		
+
 		Fixed &					operator=(Fixed const & rhs);
 		int						getRawBits(void) const;
 		void					setRawBits(int const raw);
@@ -27,6 +29,10 @@ class Fixed
 		Fixed 					operator-(Fixed const & rhs) const;
 		Fixed 					operator*(Fixed const & rhs) const;
 		Fixed 					operator/(Fixed const & rhs) const;
+		void 						operator+=(Fixed const & rhs);
+		void 						operator-=(Fixed const & rhs);
+		void 						operator*=(Fixed const & rhs);
+		void 						operator/=(Fixed const & rhs);
 		Fixed &					operator++(void);
 		Fixed					operator++(int);
 		Fixed &					operator--(void);
