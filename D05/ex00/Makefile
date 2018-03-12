@@ -6,16 +6,14 @@
 #    By: mbaron <mbaron@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/03/05 08:56:04 by mbaron            #+#    #+#              #
-#    Updated: 2018/03/09 09:57:53 by mbaron           ###   ########.fr        #
+#    Updated: 2018/03/12 09:33:32 by mbaron           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	=	sorcerer
+NAME	=	bureaucrat
 
 SRC		= 	main.cpp \
-			Sorcerer.cpp \
-			Victim.cpp \
-			Peon.cpp
+			Bureaucrat.cpp
 
 OBJ		=	$(SRC:.cpp=.o)
 
