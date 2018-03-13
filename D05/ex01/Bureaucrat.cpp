@@ -6,7 +6,7 @@
 /*   By: mbaron <mbaron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 09:34:00 by mbaron            #+#    #+#             */
-/*   Updated: 2018/03/12 11:52:04 by mbaron           ###   ########.fr       */
+/*   Updated: 2018/03/13 09:07:41 by mbaron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,11 @@ char const				* Bureaucrat::GradeTooLowException::what(void) const throw()
 
 
 
-
-
 /*********************************************************************
 * Constructor Bureaucrat Default
 *********************************************************************/
-Bureaucrat::Bureaucrat(std::string const & name, int grade) :
+Bureaucrat::Bureaucrat(std::string const & name, int grade) 
+	throw(GradeTooHighException, GradeTooLowException) :
 	_name(name)
 {
 	if (grade < 1)
@@ -117,10 +116,11 @@ Bureaucrat::~Bureaucrat(void) {}
 * incrementGrade
 *********************************************************************/
 void Bureaucrat::incrementGrade(void)
+	throw(GradeTooLowException)
 {
 	if (this->_grade > 149)
 	{
-		throw (Bureaucrat::GradeTooLowException());
+		throw (GradeTooLowException());
 	}
 	this->_grade++;
 }
@@ -128,32 +128,32 @@ void Bureaucrat::incrementGrade(void)
 * decrementGrade
 *********************************************************************/
 void Bureaucrat::decrementGrade(void)
+	throw(GradeTooHighException)
 {
 	if (this->_grade < 2)
 	{
-		throw (Bureaucrat::GradeTooHighException());
+		throw (GradeTooHighException());
 	}
 	this->_grade--;
 }
 /*********************************************************************
 * signForm
 *********************************************************************/
-void				signForm(Form const & form)
+void Bureaucrat::signForm(Form & form) const
 {
-	int		was_signed;
-	
 	try {
-		was_signed = form.beSigned(this);
+		form.beSigned(*this);
+		std::cout << "Form " << form.getName()
+			<< " has been signed by " << this->_name
+			<< std::endl;
 	}
-	catch(Form::GradeTooLowException & e)
+	catch(std::exception & e)
 	{
-		e->what();
+		std::cout << "Form " << form.getName()
+			<< " hasn't been signed by " << this->_name
+			<< " because : " << e.what()
+			<< std::endl;
 	}
-	std::cout << "Form " << form.getName()
-		<< was_signed ? " has been" : " hasn't been"
-		<< " signed by " << this->_name
-		<< was_signed ? "" : " because it was already signed."
-		<< std::endl;
 }
 /*********************************************************************
 * Getter Grade

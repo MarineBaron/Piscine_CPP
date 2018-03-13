@@ -6,7 +6,7 @@
 /*   By: mbaron <mbaron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 09:34:00 by mbaron            #+#    #+#             */
-/*   Updated: 2018/03/13 08:55:45 by mbaron           ###   ########.fr       */
+/*   Updated: 2018/03/13 11:45:22 by mbaron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,37 @@ Form::GradeTooLowException::~GradeTooLowException(void) throw() {}
 char const				* Form::GradeTooLowException::what() const throw()
 {
 	return ("Grade too low.");
+}
+
+/*********************************************************************
+* Constructor FormNotSignedException Default
+*********************************************************************/
+Form::FormNotSignedException::FormNotSignedException(void) {}
+/*********************************************************************
+* Constructor FormNotSignedException Copy
+*********************************************************************/
+Form::FormNotSignedException::FormNotSignedException(FormNotSignedException const & src)
+{
+	*this = src;
+}
+/*********************************************************************
+* Assignement FormNotSignedException
+*********************************************************************/
+Form::FormNotSignedException	& Form::FormNotSignedException::operator=(FormNotSignedException const & rhs)
+{
+	std::exception::operator=(rhs);
+	return (*this);
+}
+/*********************************************************************
+* Destructor FormNotSignedException
+*********************************************************************/
+Form::FormNotSignedException::~FormNotSignedException(void) throw() {}
+/*********************************************************************
+* What FormNotSignedException
+*********************************************************************/
+char const				* Form::FormNotSignedException::what() const throw()
+{
+	return ("Form not signed.");
 }
 
 /*********************************************************************
@@ -150,7 +181,21 @@ void		Form::beSigned(Bureaucrat const & bureaucrat) throw(GradeTooLowException)
 	}
 	this->_is_signed = 1;
 }
-
+/*********************************************************************
+* execute (only exceptions)
+*********************************************************************/
+void		Form::execute(Bureaucrat const & bureaucrat) throw(FormNotSignedException, GradeTooLowException)
+{
+	if (!this->_is_signed)
+	{
+		throw(FormNotSignedException());
+	}
+	if (bureaucrat.getGrade() > this->_grade_to_exe)
+	{
+		throw(GradeTooLowException());
+	}
+	this->action();
+}
 /*********************************************************************
 * overload operator <<
 *********************************************************************/

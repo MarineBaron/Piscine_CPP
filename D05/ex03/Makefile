@@ -6,7 +6,7 @@
 #    By: mbaron <mbaron@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/03/05 08:56:04 by mbaron            #+#    #+#              #
-#    Updated: 2018/03/13 08:32:34 by mbaron           ###   ########.fr        #
+#    Updated: 2018/03/13 14:25:47 by mbaron           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,11 @@ NAME	=	bureaucrat
 
 SRC		= 	main.cpp \
 			Bureaucrat.cpp \
-			Form.cpp
+			Form.cpp \
+			PresidentialPardonForm.cpp \
+			RobotomyRequestForm.cpp \
+			ShrubberyCreationForm.cpp\
+			Intern.cpp
 
 OBJ		=	$(SRC:.cpp=.o)
 

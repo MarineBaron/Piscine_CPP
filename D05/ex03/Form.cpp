@@ -6,11 +6,29 @@
 /*   By: mbaron <mbaron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 09:34:00 by mbaron            #+#    #+#             */
-/*   Updated: 2018/03/13 08:55:45 by mbaron           ###   ########.fr       */
+/*   Updated: 2018/03/13 14:33:15 by mbaron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Form.hpp"
+#include "PresidentialPardonForm.hpp"
+#include "RobotomyRequestForm.hpp"
+#include "ShrubberyCreationForm.hpp"
+
+Form 	* Form::getForm(std::string const & name, std::string const & target)
+ throw(Form::FormNotFindException)
+{
+	Form *form;
+	if (name == "presidential pardon")
+		form = new PresidentialPardonForm(target);
+	else if (name == "robotomy request")
+		form = new RobotomyRequestForm(target);
+	else if (name == "shrubbery creation")
+		form = new ShrubberyCreationForm(target);
+	else
+		throw(Form::FormNotFindException());
+	return form;
+}
 
 /*********************************************************************
 * Constructor GradeTooHighException Default
@@ -74,6 +92,68 @@ Form::GradeTooLowException::~GradeTooLowException(void) throw() {}
 char const				* Form::GradeTooLowException::what() const throw()
 {
 	return ("Grade too low.");
+}
+
+/*********************************************************************
+* Constructor FormNotSignedException Default
+*********************************************************************/
+Form::FormNotSignedException::FormNotSignedException(void) {}
+/*********************************************************************
+* Constructor FormNotSignedException Copy
+*********************************************************************/
+Form::FormNotSignedException::FormNotSignedException(FormNotSignedException const & src)
+{
+	*this = src;
+}
+/*********************************************************************
+* Assignement FormNotSignedException
+*********************************************************************/
+Form::FormNotSignedException	& Form::FormNotSignedException::operator=(FormNotSignedException const & rhs)
+{
+	std::exception::operator=(rhs);
+	return (*this);
+}
+/*********************************************************************
+* Destructor FormNotSignedException
+*********************************************************************/
+Form::FormNotSignedException::~FormNotSignedException(void) throw() {}
+/*********************************************************************
+* What FormNotSignedException
+*********************************************************************/
+char const				* Form::FormNotSignedException::what() const throw()
+{
+	return ("Form not signed.");
+}
+
+/*********************************************************************
+* Constructor FormNotFindException Default
+*********************************************************************/
+Form::FormNotFindException::FormNotFindException(void) {}
+/*********************************************************************
+* Constructor FormNotFindException Copy
+*********************************************************************/
+Form::FormNotFindException::FormNotFindException(FormNotFindException const & src)
+{
+	*this = src;
+}
+/*********************************************************************
+* Assignement FormNotFindException
+*********************************************************************/
+Form::FormNotFindException	& Form::FormNotFindException::operator=(FormNotFindException const & rhs)
+{
+	std::exception::operator=(rhs);
+	return (*this);
+}
+/*********************************************************************
+* Destructor FormNotFindException
+*********************************************************************/
+Form::FormNotFindException::~FormNotFindException(void) throw() {}
+/*********************************************************************
+* What FormNotFindException
+*********************************************************************/
+char const				* Form::FormNotFindException::what() const throw()
+{
+	return ("Form not find.");
 }
 
 /*********************************************************************
@@ -150,7 +230,21 @@ void		Form::beSigned(Bureaucrat const & bureaucrat) throw(GradeTooLowException)
 	}
 	this->_is_signed = 1;
 }
-
+/*********************************************************************
+* execute (only exceptions)
+*********************************************************************/
+void		Form::execute(Bureaucrat const & bureaucrat) throw(FormNotSignedException, GradeTooLowException)
+{
+	if (!this->_is_signed)
+	{
+		throw(FormNotSignedException());
+	}
+	if (bureaucrat.getGrade() > this->_grade_to_exe)
+	{
+		throw(GradeTooLowException());
+	}
+	this->action();
+}
 /*********************************************************************
 * overload operator <<
 *********************************************************************/

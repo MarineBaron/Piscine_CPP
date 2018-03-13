@@ -6,7 +6,7 @@
 /*   By: mbaron <mbaron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/12 09:33:46 by mbaron            #+#    #+#             */
-/*   Updated: 2018/03/13 08:37:49 by mbaron           ###   ########.fr       */
+/*   Updated: 2018/03/13 10:55:12 by mbaron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ class Bureaucrat
 		std::string	const	& getName(void) const;
 		int					getGrade(void) const;
 		void				signForm(Form & form) const;
+		void				executeForm(Form & form) const;
 	private:
 		std::string			_name;
 		int					_grade;
