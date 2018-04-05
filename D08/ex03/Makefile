@@ -6,14 +6,13 @@
 #    By: mbaron <mbaron@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/03/05 08:56:04 by mbaron            #+#    #+#              #
-#    Updated: 2018/04/04 22:28:12 by mbaron           ###   ########.fr        #
+#    Updated: 2018/04/05 08:27:30 by mbaron           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	=	mutantstack
+NAME	=	brainfuck
 
-SRC		= 	main.cpp \
-					MutantStack.cpp
+SRC		= 	main.cpp
 
 OBJ		=	$(SRC:.cpp=.o)
 
