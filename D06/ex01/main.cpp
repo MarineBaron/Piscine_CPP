@@ -6,7 +6,7 @@
 /*   By: mbaron <mbaron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/07 10:37:55 by mbaron            #+#    #+#             */
-/*   Updated: 2018/03/14 16:05:52 by mbaron           ###   ########.fr       */
+/*   Updated: 2018/04/03 07:47:08 by mbaron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	getRandomChar(void)
 {
 	int random = static_cast<int>(static_cast<double>(std::rand())
 		* 62.0 / static_cast<double>(RAND_MAX));
-	
+
 	if (random < 26)
 		return ('a' + random);
 	if (random < 52)
@@ -43,7 +43,7 @@ void 	display(void * raw)
 	char * cs = reinterpret_cast<char *>(raw);
 	int * is = reinterpret_cast<int *>(raw);
 	int		i = -1;
-	
+
 	while (++i < 8)
 		std::cout << cs[i];
 	std::cout << std::endl;
@@ -66,14 +66,14 @@ void	* serialize(void)
 {
 	char	* datas = new char[20];
 	int		i = -1;
-	
+
 	while (++i < 8)
 		datas[i] = getRandomChar();
-	*(reinterpret_cast<int *>(&datas[8]))=  getRandomInt();
+	*(reinterpret_cast<int *>(&datas[8])) =  getRandomInt();
 	i = 11;
 	while (++i < 20)
 		datas[i] = getRandomChar();
-	
+
 	return (static_cast<void *>(datas));
 }
 
@@ -89,13 +89,13 @@ Data	* deserialize(void * raw)
 
 int		main(void)
 {
-	std::srand(std::time(nullptr));
-	
+	std::srand(std::time(NULL));
+
 	void *p = serialize();
 	display(p);
 	Data * data = deserialize(p);
 	displayData(data);
-	
+
 	delete data;
 	return 0;
 }

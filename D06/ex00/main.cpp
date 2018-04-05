@@ -6,7 +6,7 @@
 /*   By: mbaron <mbaron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/07 10:37:55 by mbaron            #+#    #+#             */
-/*   Updated: 2018/03/14 13:08:13 by mbaron           ###   ########.fr       */
+/*   Updated: 2018/04/03 07:26:56 by mbaron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,20 @@
 int		main(int argc, char **argv)
 {
 	std::string	const prog = argv[0];
-	
+
 	if (argc != 2)
 	{
 		std::cout << "usage: " + prog + " str_to_type" << std::endl;
 		return (1);
 	}
-	
+
 	TypedString	ts = TypedString(static_cast<std::string const &>(argv[1]));
-	
+
 	std::cout << "char : ";
 	try
 	{
 		char v = static_cast<char>(ts);
-		std::cout << v;
+		std::cout << "'" << v << "'";
 	}
 	catch (std::exception & e)
 	{
@@ -45,10 +45,10 @@ int		main(int argc, char **argv)
 	{
 		std::cout << e.what();
 	}
-	
+
 	std::cout << std::fixed;
 	std::cout.precision(ts.getPrecision());
-	
+
 	std::cout << std::endl;
 	std::cout << "float : ";
 	try

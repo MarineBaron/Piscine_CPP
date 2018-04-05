@@ -6,7 +6,7 @@
 /*   By: mbaron <mbaron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/14 11:05:10 by mbaron            #+#    #+#             */
-/*   Updated: 2018/03/14 13:49:00 by mbaron           ###   ########.fr       */
+/*   Updated: 2018/04/03 07:44:22 by mbaron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ TypedString::NoConversionException & TypedString::NoConversionException::operato
 /*********************************************************************
 * What
 *********************************************************************/
-const char  * TypedString::NoConversionException::what(void) const throw() 
+const char  * TypedString::NoConversionException::what(void) const throw()
 {
 	return ("impossible");
 }
@@ -66,7 +66,7 @@ TypedString::NonDisplayableException & TypedString::NonDisplayableException::ope
 /*********************************************************************
 * What
 *********************************************************************/
-char const * TypedString::NonDisplayableException::what(void) const throw() 
+char const * TypedString::NonDisplayableException::what(void) const throw()
 {
 	return ("Non displayable");
 }
@@ -80,18 +80,18 @@ TypedString::TypedString(std::string const & str)
 	this->_data = str;
 	this->_precision = 1;
 	this->_impossible = 0;
-	
+
 	size_t	l = this->_data.length();
-	
+
 	if (l == 3
 		&& this->_data[0] == '\'' && this->_data[2] == '\'')
 		this->_double = static_cast<double>(this->_data[1]);
 	else
 	{
-		this->_double = std::atof(this->_data.c_str());
-		
+		this->_double = std::strtod(this->_data.c_str(), NULL);
+
 		size_t	p = this->_data.find(".");
-		
+
 		if (p != std::string::npos)
 		{
 			if (this->_data.find(".", p + 1) != std::string::npos)
@@ -116,7 +116,7 @@ TypedString::TypedString(TypedString const & src)
 * Destructor TypedString
 *********************************************************************/
 TypedString::~TypedString(void)
-{	
+{
 }
 /*********************************************************************
 * Assignator TypedString
@@ -162,7 +162,7 @@ bool				TypedString::getImpossible(void) const
 *********************************************************************/
 TypedString::operator char(void) const throw(NoConversionException, NonDisplayableException)
 {
-	
+
 	if (this->_impossible)
 		throw (NoConversionException());
 	else if (isinf(this->_double) || isnan(this->_double))
@@ -195,6 +195,9 @@ TypedString::operator float(void) const throw(NoConversionException)
 {
 	if (this->_impossible)
 		throw (NoConversionException());
+	else if (this->_double > static_cast<double>(std::numeric_limits<float>::max())
+				|| this->_double < static_cast<double>(std::numeric_limits<float>::min()))
+			throw (NoConversionException());
 	return (static_cast<float>(this->_double));
 }
 /*********************************************************************
@@ -218,49 +221,7 @@ TypedString::operator std::string const &(void) const
 *********************************************************************/
 std::ostream	& operator<<(std::ostream & os, TypedString const & str)
 {
-	os << "char : ";
-	try
-	{
-		os << static_cast<char>(str);
-	}
-	catch(TypedString::NoConversionException & e)
-	{
-		os << e.what();
-	}
-	catch(TypedString::NonDisplayableException & e)
-	{
-		os << e.what();
-	}
-	os << std::endl;
-	os << "int : ";
-	try
-	{
-		os << static_cast<int>(str);
-	}
-	catch(TypedString::NoConversionException & e)
-	{
-		os << e.what();
-	}
-	os << std::endl;
-	os << "float : ";
-	try
-	{
-		os << static_cast<float>(str) << "f";
-	}
-	catch(TypedString::NoConversionException & e)
-	{
-		os << e.what();
-	}
-	os << std::endl;
-	os << "double : ";
-	try
-	{
-		os << static_cast<double>(str);
-	}
-	catch(TypedString::NoConversionException & e)
-	{
-		os << e.what();
-	}
-	os << std::endl;
+	os << str.getData();
 	return (os);
+
 }

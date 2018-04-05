@@ -6,14 +6,14 @@
 #    By: mbaron <mbaron@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/03/05 08:56:04 by mbaron            #+#    #+#              #
-#    Updated: 2018/04/03 07:08:45 by mbaron           ###   ########.fr        #
+#    Updated: 2018/04/04 22:28:12 by mbaron           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	=	convert
+NAME	=	mutantstack
 
 SRC		= 	main.cpp \
-			TypedString.cpp
+					MutantStack.cpp
 
 OBJ		=	$(SRC:.cpp=.o)
 
