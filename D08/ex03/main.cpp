@@ -6,7 +6,7 @@
 /*   By: mbaron <mbaron@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/04 22:06:16 by mbaron            #+#    #+#             */
-/*   Updated: 2018/04/05 07:57:38 by mbaron           ###   ########.fr       */
+/*   Updated: 2018/04/05 10:52:49 by mbaron           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,32 +16,60 @@
 
 int   main(void)
 {
-  str::string bf = "++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>.";
+  std::string bf = "++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>.";
   unsigned int  size = bf.size();
   std::vector<Instruction> queue(size);
   std::vector<char> memory(1024);
   for(std::vector<char>::iterator it = memory.begin(); it < memory.end(); it++)
     *it = 0;
 
-  int i = 0;
+  unsigned int i = 0;
   while (i < size)
   {
     if (bf[i] == '+')
-      Instruction ins = new InstructionPlus<std::vector>(memory, memory.begin(), queue, queue.begin());
+    {
+      InstructionPlus inst(&memory, &queue, memory.begin(), queue.begin());
+      queue.push_back(inst);
+    }
     else if (bf[i] == '-')
-      Instruction ins = new InstructionMinus<std::vector>(memory, memory.begin(), queue, queue.begin());
+    {
+      InstructionMinus inst(&memory, &queue, memory.begin(), queue.begin());
+      queue.push_back(inst);
+    }
     else if (bf[i] == '>')
-      Instruction ins = new InstructionSup<std::vector>(memory, memory.begin(), queue, queue.begin());
+    {
+      InstructionSup inst(&memory, &queue, memory.begin(), queue.begin());
+      queue.push_back(inst);
+    }
     else if (bf[i] == '<')
-      Instruction ins = new InstructionInf<std::vector>(memory, memory.begin(), queue, queue.begin());
+    {
+      InstructionInf inst(&memory, &queue, memory.begin(), queue.begin());
+      queue.push_back(inst);
+    }
     else if (bf[i] == '[')
-      Instruction ins = new InstructionOpen<std::vector>(memory, memory.begin(), queue, queue.begin());
+    {
+      InstructionOpen inst(&memory, &queue, memory.begin(), queue.begin());
+      queue.push_back(inst);
+    }
     else if (bf[i] == ']')
-      Instruction ins = new InstructionClose<std::vector>(memory, memory.begin(), queue, queue.begin());
+    {
+      InstructionClose inst(&memory, &queue, memory.begin(), queue.begin());
+      queue.push_back(inst);
+    }
     else if (bf[i] == '.')
-        Instruction ins = new InstructionDot<std::vector>(memory, memory.begin(), queue, queue.begin());
+    {
+      InstructionDot inst(&memory, &queue, memory.begin(), queue.begin());
+      queue.push_back(inst);
+    }
     i++;
   }
+  for(std::vector<Instruction>::iterator it = queue.begin(), end =  queue.end(); it != end; it++)
+  {
+    std::cout << it->getInstruction();
+  }
+  queue.begin()->execute();
+  queue.clear();
+  memory.clear();
 
 
   return 0;

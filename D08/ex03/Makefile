@@ -6,7 +6,7 @@
 #    By: mbaron <mbaron@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/03/05 08:56:04 by mbaron            #+#    #+#              #
-#    Updated: 2018/04/05 08:27:30 by mbaron           ###   ########.fr        #
+#    Updated: 2018/04/05 09:58:24 by mbaron           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ SRC		= 	main.cpp
 
 OBJ		=	$(SRC:.cpp=.o)
 
-FLAGS	=	-Wall -Werror -Wextra
+FLAGS	=	-Wall -Werror -Wextra -g -fsanitize=address
 
 GCC		=	clang++-3.5
 
